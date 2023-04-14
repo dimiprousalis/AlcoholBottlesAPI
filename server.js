@@ -25,9 +25,9 @@ app.get('/', (request, response) => {
 
 
 //Return entire DB
-app.get('/api', (request, response) => {
+app.get('/api',async (request, response) => {
     //go to the database and find the collection and put all objects into an array
-    db.collection('spirits').find().toArray()
+    await db.collection('spirits').find().toArray()
         .then(data => {
             response.json(data)
         })
@@ -35,10 +35,10 @@ app.get('/api', (request, response) => {
 })
 
 //Search for specific bottle type
-app.get('/api/:name', (request, response) => {
+app.get('/api/:name',async (request, response) => {
     const bottleType = request.params.name.toUpperCase()
     let query = { Type: bottleType }
-    db.collection('spirits').find(query).toArray()
+    await db.collection('spirits').find(query).toArray()
         .then(data => {
             response.json(data)
         })
