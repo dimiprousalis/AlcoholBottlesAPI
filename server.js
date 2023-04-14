@@ -13,6 +13,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
     })
+    .catch(error => console.error(error))
     
 
 app.use(express.urlencoded({ extended: true }))
