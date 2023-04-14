@@ -15,6 +15,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
 
 
 
+
         app.use(express.urlencoded({ extended: true }))
         app.use(express.json())
 
@@ -24,9 +25,9 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
 
 
         //Return entire DB
-        app.get('/api', async (request, response) => {
+        app.get('/api', (request, response) => {
             //go to the database and find the collection and put all objects into an array
-            await db.collection('spirits').find().toArray()
+            db.collection('spirits').find().toArray()
                 .then(data => {
                     response.json(data)
                 })
@@ -34,10 +35,10 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         })
 
         //Search for specific bottle type
-        app.get('/api/:name', async (request, response) => {
+        app.get('/api/:name', (request, response) => {
             const bottleType = request.params.name.toUpperCase()
             let query = { Type: bottleType }
-            await db.collection('spirits').find(query).toArray()
+            db.collection('spirits').find(query).toArray()
                 .then(data => {
                     response.json(data)
                 })
@@ -50,4 +51,4 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         })
 
     })
-    .catch(error => console.error(error))
+    .catch(console.error)
